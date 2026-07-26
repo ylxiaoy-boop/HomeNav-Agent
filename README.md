@@ -1,170 +1,352 @@
-# 🏠 HomeNav‑Agent
+# 🏠 HomeNav-Agent
 
-> *面向家庭服务任务的 Agent‑Tool 架构具身导航智能体*
+<div align="center">
 
-[![GitHub license](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![Status](https://img.shields.io/badge/status-🚧%20开发中-yellow)]()
+# HomeNav-Agent
 
----
+### A Vision-Language Driven Embodied Navigation Agent for Household Environments
 
-## 📖 项目简介
+**基于视觉语言模型与大语言模型的家庭环境具身导航智能体**
 
-**HomeNav‑Agent** 是一套基于 **Agent‑Tool** 架构的家庭服务具身导航智能体系统。它将大语言模型（LLM）作为中央决策核心，通过 **ReAct（思考‑行动‑观察）** 循环动态调度导航、感知和记忆三大工具，使机器人能在开放的家庭环境中自主完成寻找物品、隐含需求响应、复合任务等复杂服务。
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)]()
+[![License](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Developing-orange)]()
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-success)]()
 
-与传统 Pipeline 架构相比，HomeNav‑Agent 具备：
-- ✅ **动态决策** – 根据环境反馈实时调整策略，而非“一次性执行”
-- ✅ **语义交互** – 直接理解自然语言指令，包括隐含需求
-- ✅ **可扩展架构** – 新能力以插件式工具加入，即插即用
-- ✅ **持续成长** – 长期记忆机制使重复任务效率提升 **40%+**
+*An Agent-Tool based embodied AI framework integrating Vision-Language Models, Large Language Models, semantic navigation, visual perception and long-term memory.*
 
----
-
-## 🏛️ 系统架构
-决策层 (CentralAgent)
-│
-▼
-工具层 (Tool System)
-├── NavigationTool (VLFM 语义导航)
-├── PerceptionTool (YOLOv8 目标检测)
-└── MemoryTool (常识库 + 长期记忆)
-│
-▼
-基础层 (Models & Infrastructure)
-├── LLM API / YOLOv8 / VLFM
-├── SQLite 记忆数据库
-├── AI2‑THOR 仿真环境
-└── 配置 / 日志 / 异常处理
-
-
-**工作流程**：用户指令 → CentralAgent 思考 → 调用工具执行 → 观察结果 → 循环直至任务完成 → 更新记忆 → 返回结果。
+</div>
 
 ---
 
-## ✨ 核心特性
+# 📖 Introduction
 
-| 特性 | 说明 |
-|------|------|
-| **动态决策** | 采用 ReAct 循环，Agent 可在每步自主推理、选择工具并调整计划 |
-| **语义导航** | 基于 VLFM 模型，支持自然语言目标（“去厨房”“找红色杯子”）导航 |
-| **视觉感知** | 集成 YOLOv8，提供全景检测、目标搜索、环视扫描 |
-| **双层记忆** | 预构建家庭常识库 + 长期环境记忆（置信度/验证/衰减机制） |
-| **工具化扩展** | 统一 Tool 接口，新增能力只需添加新工具，核心系统无需修改 |
-| **工程完备** | 配置管理、结构化日志、异常重试、RESTful API、CLI 交互 |
+HomeNav-Agent 是一个面向家庭服务场景的具身智能导航系统，采用 **Agent-Tool** 架构，以 **Large Language Model (LLM)** 作为中央决策核心，结合 **Vision-Language Model (VLM)**、目标检测模型以及长期记忆模块，实现自然语言理解、自主任务规划、语义导航、视觉感知和环境记忆等能力。
+
+系统遵循 **ReAct（Reasoning + Acting）** 推理范式，使机器人能够根据环境反馈动态调整策略，而不是传统 Pipeline 的固定执行流程。
+
+项目目标并非构建单一导航算法，而是探索 **LLM Agent 在家庭服务机器人中的自主决策框架**。
 
 ---
 
-## 📊 实验结果（论文摘要）
+# ✨ Highlights
 
-在 AI2‑THOR 仿真环境中，HomeNav‑Agent 表现显著优于传统 Pipeline：
-
-| 任务类型 | Pipeline | HomeNav‑Agent |
-|----------|----------|---------------|
-| 单物体寻找 | 71%      | **82%**       |
-| 隐含需求   | 58%      | **72%**       |
-| 复合任务   | 42%      | **64%**       |
-
-- **记忆效率**：重复任务平均路径长度缩短 **47%**，耗时减少 **42%**
-- **消融实验**：ReAct 循环贡献最大（+11% 成功率），常识与感知协同亦有显著提升
+- 🤖 Agent-Tool Architecture
+- 🧠 ReAct-based Dynamic Reasoning
+- 👁️ Vision-Language Semantic Navigation
+- 📷 YOLOv8 Visual Perception
+- 🏠 Household Knowledge Base
+- 💾 Long-term Environment Memory
+- 🔌 Modular Tool Plugin System
+- ⚡ Lightweight Deployment
 
 ---
 
-## 🚀 快速开始
+# 🏛️ System Architecture
 
-### 环境要求
-- Python 3.10+
-- PyTorch 2.0+
-- （可选）NVIDIA GPU（用于加速 YOLO / VLFM 推理）
+```text
+                    User Instruction
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │   Central Agent     │
+                 │  (LLM + ReAct)      │
+                 └────────────────────┘
+                           │
+          ┌────────────────┼────────────────┐
+          ▼                ▼                ▼
+ ┌────────────────┐ ┌────────────────┐ ┌────────────────┐
+ │ NavigationTool │ │ PerceptionTool │ │  MemoryTool    │
+ │     VLFM       │ │    YOLOv8      │ │ SQLite + KB    │
+ └────────────────┘ └────────────────┘ └────────────────┘
+          │                │                │
+          └────────────────┼────────────────┘
+                           ▼
+                 Household Environment
+```
 
 ---
 
-### 📦 安装
+# 🔄 Workflow
 
-克隆仓库并安装依赖：
+```text
+User Task
+    │
+    ▼
+Task Understanding
+    │
+    ▼
+LLM Reasoning
+    │
+    ▼
+Tool Selection
+    │
+    ▼
+Navigation / Perception / Memory
+    │
+    ▼
+Environment Feedback
+    │
+    ▼
+ReAct Reasoning Loop
+    │
+    ▼
+Task Completed
+    │
+    ▼
+Memory Update
+```
+
+---
+
+# 🚀 Features
+
+| Module | Description |
+|---------|-------------|
+| **Central Agent** | 基于 ReAct 的任务规划与动态决策 |
+| **Navigation** | 基于 VLFM 的自然语言语义导航 |
+| **Perception** | YOLOv8 目标检测、场景感知、目标定位 |
+| **Memory** | 家庭常识库 + 长期环境记忆 + 置信度管理 |
+| **Tool System** | 插件式工具架构，支持快速扩展 |
+| **Engineering** | 配置管理、日志、异常恢复、REST API |
+
+---
+
+# 📦 Installation
+
+Clone this repository.
 
 ```bash
-git clone https://github.com/你的用户名/HomeNav-Agent.git
+git clone https://github.com/yourname/HomeNav-Agent.git
+
 cd HomeNav-Agent
+```
+
+Install dependencies.
+
+```bash
 pip install -r requirements.txt
-如果遇到网络问题，可使用国内镜像源，如 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+If the network connection is unstable, use the Tsinghua mirror.
+
+```bash
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 ---
 
-## ⚙️ 配置
-复制示例配置文件：
+# ⚙️ Configuration
 
-bash
+Copy the configuration template.
+
+```bash
 cp config.yaml.example config.yaml
-编辑 config.yaml，填入必要信息：
+```
 
-LLM：API 密钥、模型名称（如 gpt-3.5-turbo）
+Edit **config.yaml**.
 
-模型路径：YOLOv8 权重文件路径、VLFM 预训练模型路径
+### LLM
 
-环境设置：AI2‑THOR 场景路径、运行模式（调试/发布）
-
-记忆数据库：SQLite 存储路径（默认 data/memory.db）
-
-你也可以通过环境变量覆盖敏感配置（如 API_KEY），生产环境推荐这样做。
+```yaml
+llm:
+  provider: OpenAI
+  model: GPT-4o
+  api_key: YOUR_API_KEY
+```
 
 ---
 
-## ▶️ 运行
-命令行交互模式
-bash
+### Vision Model
+
+```yaml
+vision:
+  detector: models/yolov8.pt
+  navigator: models/vlfm
+```
+
+---
+
+### Environment
+
+```yaml
+environment:
+  simulator: AI2-THOR
+  scene: FloorPlan1
+  mode: debug
+```
+
+> Lightweight mode supports replacing AI2-THOR with local images or custom datasets.
+
+---
+
+### Memory
+
+```yaml
+memory:
+  database: data/memory.db
+```
+
+SQLite is used as the default memory backend.
+
+---
+
+# ▶️ Quick Start
+
+Interactive Mode
+
+```bash
 python main.py --interactive
-输入自然语言指令（如 “帮我找一个杯子”），系统会实时显示 Agent 的思考与行动轨迹。
+```
 
-RESTful API 模式
-启动服务：
+Render Mode
 
-bash
-python -m uvicorn main:app --host 0.0.0.0 --port 8000
-然后通过 POST /api/v1/task 提交任务（详见 API 文档）。
+```bash
+python main.py --interactive --render
+```
 
-仿真环境可视化（可选）
-如果希望观察机器人在 AI2‑THOR 中的第一视角画面，可启用 --render 参数：
+RESTful API
+
+```bash
+uvicorn interfaces.api:app --host 0.0.0.0 --port 8000
+```
+
+API Example
+
+```http
+POST /api/v1/task
+```
 
 ---
 
-bash
-python main.py --interactive --render
-📁 项目结构
-text
-HomeNav-Agent/
-├── agent/                     # CentralAgent 实现
-│   ├── central_agent.py       # 主类，ReAct 循环
-│   ├── prompt.py              # 系统 Prompt 模板
-│   ├── parser.py              # 输出解析器
-│   └── task_state.py          # 任务状态管理
-├── tools/                     # 工具系统
-│   ├── base.py                # BaseTool 抽象类
-│   ├── manager.py             # ToolManager
-│   ├── navigation.py          # NavigationTool
-│   ├── perception.py          # PerceptionTool
-│   └── memory.py              # MemoryTool
-├── memory/                    # 记忆底层
-│   ├── long_term.py           # 长期记忆（SQLite）
-│   ├── knowledge_base.py      # 常识库加载与查询
-│   └── schema.py              # 数据结构定义
-├── models/                    # AI 模型封装
-│   ├── llm_client.py          # LLM API 客户端
-│   ├── vlfm_model.py          # VLFM 导航模型
-│   └── yolo_model.py          # YOLOv8 检测模型
-├── config/                    # 配置管理
-│   ├── settings.py            # 配置加载器
-│   └── config.yaml            # 主配置文件（不提交，由 .gitignore 忽略）
-├── utils/                     # 通用工具
-│   ├── logger.py              # 结构化日志
-│   ├── exceptions.py          # 自定义异常
-│   └── formatters.py          # 格式转换
-├── interfaces/                # 对外接口
-│   ├── cli.py                 # 命令行入口
-│   └── api.py                 # FastAPI 服务
-├── data/                      # 数据目录
-│   ├── knowledge/             # 常识库 JSON 文件
-│   └── memory.db              # 长期记忆数据库（自动生成）
-├── config.yaml.example        # 配置示例（提交）
-├── requirements.txt           # Python 依赖
+# 📁 Project Structure
+
+```text
+HomeNav-Agent
+│
+├── agent
+│   ├── central_agent.py
+│   ├── parser.py
+│   ├── prompt.py
+│   └── task_state.py
+│
+├── tools
+│   ├── base.py
+│   ├── manager.py
+│   ├── navigation.py
+│   ├── perception.py
+│   └── memory.py
+│
+├── memory
+│   ├── long_term.py
+│   ├── knowledge_base.py
+│   └── schema.py
+│
+├── models
+│   ├── llm_client.py
+│   ├── yolo_model.py
+│   └── vlfm_model.py
+│
+├── interfaces
+│   ├── cli.py
+│   └── api.py
+│
+├── config
+│   ├── settings.py
+│   └── config.yaml
+│
+├── utils
+│   ├── logger.py
+│   ├── exceptions.py
+│   └── formatter.py
+│
+├── assets
+│   ├── architecture.png
+│   ├── workflow.png
+│   └── demo.gif
+│
+├── data
+│   ├── knowledge
+│   └── memory.db
+│
+├── docs
+│
+├── requirements.txt
 ├── README.md
 └── LICENSE
+```
+
+---
+
+# 🛣️ Roadmap
+
+| Version | Progress |
+|----------|----------|
+| ✅ v1.0 | Agent Framework |
+| ✅ v1.1 | Tool System |
+| ✅ v1.2 | Memory Module |
+| 🚧 v1.3 | Vision-Language Navigation |
+| 🚧 v1.4 | Gradio Demo |
+| 🚧 v2.0 | Real Robot Deployment |
+
+---
+
+# 📚 Technology Stack
+
+- Python
+- PyTorch
+- OpenCV
+- YOLOv8
+- Vision-Language Model (VLFM)
+- OpenAI API / Qwen / InternVL
+- SQLite
+- FastAPI
+- Gradio
+- AI2-THOR (Optional)
+
+---
+
+# 📌 Future Work
+
+- Multi-Agent Collaboration
+- Long-Horizon Task Planning
+- Retrieval-Augmented Memory
+- Real Robot Deployment
+- Multimodal World Model
+- Visual Chain-of-Thought Reasoning
+
+---
+
+# 📖 Citation
+
+```bibtex
+@misc{HomeNavAgent2026,
+  title={HomeNav-Agent: A Vision-Language Driven Embodied Navigation Agent for Household Environments},
+  author={Your Name},
+  year={2026},
+  note={Under Development}
+}
+```
+
+---
+
+# 🙏 Acknowledgements
+
+This project is inspired by and built upon the following open-source projects:
+
+- YOLOv8
+- LangChain
+- OpenAI API
+- FastAPI
+- Gradio
+- AI2-THOR
+- InternVL
+- Qwen2.5-VL
+
+---
+
+<div align="center">
+
+⭐ If you find this project useful, please consider giving it a Star.
+
+</div>
