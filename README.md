@@ -143,34 +143,7 @@ python -m unittest discover -s tests -v
 
 测试覆盖输出解析、工具参数校验、记忆置信度更新、二维导航和完整 `Memory -> Navigation -> Perception -> Memory` 工作流。
 
-## GitHub 上传建议
 
-### 必须上传：可运行源码
-
-```text
-agent/              tools/              memory/
-models/             interfaces/         config/
-scripts/            tests/
-main.py             requirements.txt    README.md
-.gitignore
-```
-
-其中 `models/ai2thor_environment.py`、`scripts/run_ai2thor_validation.py` 虽然当前尚未完成三维实测，但应保留为后续 AI2-THOR 扩展接口和验证入口。
-
-### 建议上传：少量展示资产
-
-可以新增 `docs/assets/`，只放 `two_d_household_map.png`、`task_execution_preview.png` 和 `experiment_charts.png`。项目书或可研报告适合作为 Release 附件；MP4 体积较大，建议使用 GitHub Release、Git LFS 或网盘链接，不要直接堆在源码根目录。
-
-### 不要上传
-
-```text
-.env                 # 密钥和本地配置
-.venv/、homenav_env/  # 虚拟环境
-__pycache__/、*.pyc   # Python 缓存
-data/*.db             # 本地运行记忆数据库
-tmp/                  # 文档和渲染临时文件
-output/**/raw/        # 大量实验 SQLite 原始数据库
-```
 
 ## 研究边界与后续计划
 
