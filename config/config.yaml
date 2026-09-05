@@ -1,0 +1,35 @@
+llm:
+  provider: "openai"
+  model: "gpt-4o-mini"
+  temperature: 0
+  max_tokens: 700
+  timeout_seconds: 30
+
+system:
+  max_agent_steps: 20
+  log_level: "INFO"
+  mode: "two_d"
+
+navigation:
+  backend: "two_d"
+  max_steps: 100
+
+perception:
+  backend: "two_d"
+  confidence_threshold: 0.5
+
+memory:
+  db_path: "data/memory.db"
+  decay_days: 30
+
+ai2thor:
+  scene: "FloorPlan1"
+  width: 640
+  height: 480
+  grid_size: 0.25
+  record_path: null
+
+two_d:
+  width: 32
+  height: 23
+  visibility_radius: 2
