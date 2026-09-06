@@ -1,0 +1,30 @@
+# Secrets and local configuration
+.env
+*.key
+*.pem
+
+# Python environments and caches
+.venv/
+venv/
+homenav_env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+
+# Local runtime state
+data/*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Generated artifacts: curate small screenshots under docs/assets/ if needed.
+output/
+tmp/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
